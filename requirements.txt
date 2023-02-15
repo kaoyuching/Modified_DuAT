@@ -1,0 +1,4 @@
+torch==1.9.0
+torchvision==0.10.0
+numpy >= 1.22.3
+timm >= 0.4.12
