@@ -52,14 +52,34 @@ class DuAT(nn.Module):
                self.encoder.load_state_dict(checkpoint)
             except:
                warnings.warn("No pretrained used. Use init weights.")
+        # encoder's embedding dims
+        self.embed_dims = self.encoder.embed_dims
         # SBA params: in_channels, out_channels
         self.sba = SBABlock(32, 32)
         # GLAM params: feature_map_size, in_channels, out_channels, embedding_num, kernel_size
-        self.glam2 = GLAM(in_feature_size//8, 128, 32, 64, kernel_size=3)
-        self.glam3 = GLAM(in_feature_size//16, 320, 32, 160, kernel_size=3)
-        self.glam4 = GLAM(in_feature_size//32, 512, 32, 256, kernel_size=3)
+        self.glam2 = GLAM(
+            in_feature_size//8,
+            self.embed_dims[1],
+            32,
+            self.embed_dims[1]//2,
+            kernel_size=3
+        )
+        self.glam3 = GLAM(
+            in_feature_size//16,
+            self.embed_dims[2],
+            32,
+            self.embed_dims[2]//2,
+            kernel_size=3
+        )
+        self.glam4 = GLAM(
+            in_feature_size//32,
+            self.embed_dims[3],
+            32,
+            self.embed_dims[3]//2,
+            kernel_size=3
+        )
 
-        self.f1_conv = ConvUnit(64, 32, kernel_size=3, padding=1)
+        self.f1_conv = ConvUnit(self.embed_dims[0], 32, kernel_size=3, padding=1)
         self.glam_conv1 = ConvUnit(64, 32, kernel_size=1)  # for SBA module input
         # glam output conv
         self.glam_conv2 = ConvUnit(96, num_classes, kernel_size=1)
