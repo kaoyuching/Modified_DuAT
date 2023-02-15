@@ -1,0 +1,13 @@
+*.pyc
+*.pth
+*.pt
+*.patch
+*.egg-info
+*.egg*
+*.png
+*.jpg
+*.env*
+*.log
+*.csv
+build/*
+dist/*
