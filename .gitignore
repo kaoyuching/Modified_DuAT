@@ -11,3 +11,4 @@
 *.csv
 build/*
 dist/*
+pretrained/*
