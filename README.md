@@ -19,14 +19,14 @@ In modified DuAT, encoder is [PVT-v2](https://github.com/whai362/PVT).
 ### Install from a specific tag/branch
 1. Install by pip
 
-    ```shell=
+    ```shell
     $ pip install git+https://github.com/kaoyuching/Modified_DuAT.git@<tag or branch>
     ```
 
 ### Install (develop)
 1. Clone form git
 
-    ```shell=
+    ```shell
     $ git clone https://github.com/kaoyuching/Modified_DuAT.git
     cd Modified_DuAT
     ```
@@ -35,19 +35,19 @@ In modified DuAT, encoder is [PVT-v2](https://github.com/whai362/PVT).
 
 3. Install requirements
 
-    ```shell=
+    ```shell
     $ pip install -r requirements_dev.txt
     ```
 
 4. Install `modified_duat` in repository folder
 
-    ```shell=
+    ```shell
     $ pip install -e .
     ````
 
 
 ## Usage
-```python=
+```python
     from modified_duat.duat import DuAT
 
     model = DuAT(
