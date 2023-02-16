@@ -1,7 +1,7 @@
 # Modified DuAT
 Modified DuAT uses the structure proposed by paper [DuAT: Dual-Aggregation Transformer Network for Medical Image Segmentation](https://arxiv.org/abs/2212.11677)
 and replaces the GLSA module with GLAM(global-local attention module) from [All the attention you need: Global-local, spatial-channel attention for image retrieval](https://arxiv.org/abs/2107.08000).
-In modified DuAT, encoder is [PVT-v2](https://github.com/whai362/PVT).
+In modified DuAT, use encoder [PVT-v2](https://github.com/whai362/PVT) as encoder.
 
 
 ## Dependencies
@@ -47,6 +47,19 @@ In modified DuAT, encoder is [PVT-v2](https://github.com/whai362/PVT).
 
 
 ## Usage
+1. Model input parameters:
+    - `in_channels`:
+        Number of channels of input image.
+    - `encoder_name` should be one of name in the following:
+        'pvt_v2_b0', 'pvt_v2_b1', 'pvt_v2_b2', 'pvt_v2_b3', 'pvt_v2_b4', 'pvt_v2_b5', 'pvt_v2_b2_li'
+    - `encoder_pretrained`:
+        File path of the pretrained weight.
+        Pretrained weight can get from [PVT repo](https://github.com/whai362/PVT/tree/v2/classification)
+    - `num_classes`:
+        Mask class number.
+
+2. Example
+
 ```python
     from modified_duat.duat import DuAT
 
