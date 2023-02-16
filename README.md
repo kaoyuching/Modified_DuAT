@@ -54,7 +54,6 @@ In modified DuAT, encoder is [PVT-v2](https://github.com/whai362/PVT).
         in_channels=3,
         encoder_name='pvt_v2_b2',
         encoder_pretrained=None,
-        in_feature_size=512,
         num_classes=3,
     )
 ```

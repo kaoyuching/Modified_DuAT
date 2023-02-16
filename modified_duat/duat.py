@@ -25,7 +25,6 @@ class DuAT(nn.Module):
         - encoder_name(str): one of {'pvt_v2_b0', 'pvt_v2_b1', 'pvt_v2_b2', 'pvt_v2_b3',
         'pvt_v2_b4', 'pvt_v2_b5', 'pvt_v2_b2_li'}.
         - encoder_pretrained(optional, str): pretrained weight path of encoder. Default: None.
-        - in_feature_size(int): input image size. Default: 512.
         - num_classes(int): output channel's number. Default: 1.
     '''
     def __init__(
@@ -33,7 +32,6 @@ class DuAT(nn.Module):
             in_channels: int = 3,
             encoder_name: str = 'pvt_v2_b2',
             encoder_pretrained: Optional[str] = None,
-            in_feature_size: int = 512,
             num_classes: int = 1,
         ):
         super().__init__()
@@ -56,23 +54,20 @@ class DuAT(nn.Module):
         self.embed_dims = self.encoder.embed_dims
         # SBA params: in_channels, out_channels
         self.sba = SBABlock(32, 32)
-        # GLAM params: feature_map_size, in_channels, out_channels, embedding_num, kernel_size
+        # GLAM params: in_channels, out_channels, embedding_num, kernel_size
         self.glam2 = GLAM(
-            in_feature_size//8,
             self.embed_dims[1],
             32,
             self.embed_dims[1]//2,
             kernel_size=3
         )
         self.glam3 = GLAM(
-            in_feature_size//16,
             self.embed_dims[2],
             32,
             self.embed_dims[2]//2,
             kernel_size=3
         )
         self.glam4 = GLAM(
-            in_feature_size//32,
             self.embed_dims[3],
             32,
             self.embed_dims[3]//2,

@@ -12,9 +12,9 @@ class GlobalChannelAttention(nn.Module):
     r'''
     Global channel attention(GCA)
     '''
-    def __init__(self, feature_map_size, kernel_size=1):
+    def __init__(self, kernel_size=1):
         super().__init__()
-        self.gap = nn.AvgPool2d(feature_map_size)
+        self.gap = nn.AdaptiveAvgPool2d(1)
         self.conv_q = nn.Conv1d(1, 1, kernel_size, stride=1, padding=(kernel_size - 1)//2)
         self.conv_k = nn.Conv1d(1, 1, kernel_size, stride=1, padding=(kernel_size - 1)//2)
         self.softmax = nn.Softmax(dim=1)
@@ -83,9 +83,9 @@ class GlobalAttention(nn.Module):
     r'''
     Global attention module.
     '''
-    def __init__(self, feature_map_size, in_channels, embedding_num, kernel_size=1):
+    def __init__(self, in_channels, embedding_num, kernel_size=1):
         super().__init__()
-        self.gca = GlobalChannelAttention(feature_map_size, kernel_size=kernel_size)
+        self.gca = GlobalChannelAttention(kernel_size=kernel_size)
         self.gsa = GlobalSpatialAttention(in_channels, embedding_num)
 
     def forward(self, feature):
@@ -101,9 +101,9 @@ class LocalChannelAttention(nn.Module):
     r'''
     Local channel attention.
     '''
-    def __init__(self, feature_map_size, in_channels, kernel_size=1):
+    def __init__(self, in_channels, kernel_size=1):
         super().__init__()
-        self.gap = nn.AvgPool2d(feature_map_size)
+        self.gap = nn.AdaptiveAvgPool2d(1)
         self.conv = nn.Conv1d(in_channels, in_channels, kernel_size, padding=(kernel_size - 1)//2)
 
     def forward(self, feature):
@@ -145,9 +145,9 @@ class LocalAttention(nn.Module):
     r'''
     Local attention module.
     '''
-    def __init__(self, feature_map_size, in_channels, embedding_num, kernel_size=1):
+    def __init__(self, in_channels, embedding_num, kernel_size=1):
         super().__init__()
-        self.lca = LocalChannelAttention(feature_map_size, in_channels, kernel_size=kernel_size)
+        self.lca = LocalChannelAttention(in_channels, kernel_size=kernel_size)
         self.lsa = LocalSpatialAttention(in_channels, embedding_num)
 
     def forward(self, feature):
@@ -162,10 +162,10 @@ class GLAM(nn.Module):
     r'''
     Global-Local Attention Module (GLAM).
     '''
-    def __init__(self, feature_map_size, in_channels, out_channels, embedding_num, kernel_size=1):
+    def __init__(self, in_channels, out_channels, embedding_num, kernel_size=1):
         super().__init__()
-        self.local_att_fn = LocalAttention(feature_map_size, in_channels, embedding_num, kernel_size)
-        self.global_att_fn = GlobalAttention(feature_map_size, in_channels, embedding_num, kernel_size)
+        self.local_att_fn = LocalAttention(in_channels, embedding_num, kernel_size)
+        self.global_att_fn = GlobalAttention(in_channels, embedding_num, kernel_size)
         self.fusion_weight = nn.Parameter(torch.Tensor([1/3, 1/3, 1/3]))
         self.conv = nn.Conv2d(in_channels, out_channels, 1)
 
