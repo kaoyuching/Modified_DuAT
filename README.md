@@ -70,3 +70,9 @@ In modified DuAT, use encoder [PVT-v2](https://github.com/whai362/PVT) as encode
         num_classes=3,
     )
 ```
+
+
+## Acknowledgement
+- DuAT: https://github.com/Barrett-python/DuAT/tree/a643560281446d71a25b47eabca1ca133bf13111
+- PVT: https://github.com/whai362/PVT
+- GLAM: https://arxiv.org/abs/2107.08000
