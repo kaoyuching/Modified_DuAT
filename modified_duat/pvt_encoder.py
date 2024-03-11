@@ -269,7 +269,8 @@ class PyramidVisionTransformerV2(nn.Module):
             depths=[3, 4, 6, 3],
             sr_ratios=[8, 4, 2, 1],
             num_stages=4,
-            linear=False
+            linear=False,
+            **kwargs,
         ):
         super().__init__()
         self.num_classes = num_classes
